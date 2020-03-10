@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+    <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <!-- <Panel>
+        <Group>
+            <List></List>
+        </Group>
+        <Group>
+            <List></List>
+        </Group>
+        <Group>
+            <List></List>
+        </Group>
+    </Panel> -->
+    <script type="text/babel">
+        /* 
+          React 
+            组件：拥有独立功能的一个模块
+
+            react还提拱组件的另外一种使用的方式：标签化
+
+            标签化：传参，通过标签属性传入的
+        */
+        var users = ['aaa', 'bbb', 'ccc']
+        var users2 = ['ddd', 'fff', 'ggg']
+
+        /* 
+        如果一个函数或类作为一个组件去使用的话，那么名称必需首字母大写
+        如果使用类实现组件，那么需要继承一个父类
+        ：React.Componet
+        组件类必需实现一个render（）方法
+         props:传入的参数必需是用对象下的一个属性props来接收
+
+         */
+        class List extends React.Component {
+
+            render() {
+                return this.props.data.map((user, index) => {
+                    return <li key={index}>{user}</li>
+                })
+            }
+        }
+        ReactDOM.render(
+            <div>
+                <ul>
+                    {/* List(users) */}
+                    <List data={users} a="1" />
+                </ul>
+                <ul>
+                    {/* List(users2) */}
+                    <List data={users2} />
+                </ul>
+            </div>,
+            // 这里的内容不会作为html 进行解析，只会作为普通的字符串内容
+            document.getElementById('app')
+        );
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+    <script src="js/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        /* 
+          React 
+            组件：拥有独立功能的一个模块
+
+            react还提拱组件的另外一种使用的方式：标签化
+
+            标签化：传参，通过标签属性传入的
+        */
+        var users = ['aaa', 'bbb', 'ccc']
+        var users2 = ['ddd', 'fff', 'ggg']
+
+        function List(props) {
+            // props :接收来自标签上的所有属性
+            /* 
+                 props = {
+                     data:users,
+                     a:'1'
+                 }
+             */
+            console.log(props);
+
+            return props.data.map((user, index) => {
+                return <li key={index}>{user}</li>
+            })
+        }
+
+        ReactDOM.render(
+            <div>
+                <ul>
+                    {/* List(users) */}
+                    <List data={users} a="1" />
+                </ul>
+                <ul>
+                    {/* List(users2) */}
+                    <List data={users2} />
+                </ul>
+            </div>,
+            // 这里的内容不会作为html 进行解析，只会作为普通的字符串内容
+            document.getElementById('app')
+        );
+    </script>
+</body>
+
+</html>

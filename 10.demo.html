@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+    <script src="js/babel.min.js"></script>
+    <script src="js/data.js"></script>
+    <style>
+        .panel {
+            border: 1px solid #000;
+            width: 600px;
+        }
+
+        .title {
+            margin: 0;
+            padding: 10px;
+            background: #ccc;
+        }
+
+        p.message {
+            color: #aaa;
+        }
+
+        p.vip {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <!-- <Panel>
+        <Group>
+            <List></List>
+        </Group>
+        <Group>
+            <List></List>
+        </Group>
+        <Group>
+            <List></List>
+        </Group>
+    </Panel> -->
+    <script type="text/babel">
+        class List extends React.Component {
+            render() {
+                return (
+                    <ul>
+                        {
+                            this.props.data.
+                                map((item, index) => {
+                                    return <li key={index} >
+                                        <p className={item.vip ? 'vip' : ''}> {item.username}</p>
+                                        <p className="message"> {item.message}</p>
+                                    </li>
+                                })
+                        }
+                    </ul>
+                )
+            }
+        }
+
+        class Group extends React.Component {
+            constructor() {
+                super(...arguments);
+                this.state = {
+                    show: this.props.show
+                }
+            }
+            changeList() {
+                console.log(this);
+                this.setState({
+                    show: !this.state.show
+                })
+
+                /* 
+                   1，隐藏当前，不需要改变其他列表的状态
+                   2，当前展开，其他列表隐藏
+                 */
+            }
+            render() {
+                return (
+                    <div>
+                        <h2 className="title" onClick={this.changeList.bind(this)}>{this.props.data.name}</h2>
+                        {this.state.show ? <List data={this.props.data.list} /> : ''}
+                    </div>
+                )
+            }
+        }
+
+        class Panel extends React.Component {
+            constructor() {
+                super(...arguments);
+                this.state = {
+                    showList: [true, false, false]
+                }
+            }
+            render() {
+                return (
+                    <div className="panel">
+                        {
+                            Object.keys(this.props.data).
+                                map((item, index) => {
+                                    return <Group show={this.state.showList[index]} key={index} data={this.props.data[item]} />
+                                })
+                        }
+
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(
+            <Panel data={dataList}></Panel>,
+            // 这里的内容不会作为html 进行解析，只会作为普通的字符串内容
+            document.getElementById('app')
+        );
+    </script>
+</body>
+
+</html>
